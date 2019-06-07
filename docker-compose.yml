@@ -1,0 +1,20 @@
+version: '2'
+services:
+
+  # The Application
+  # The Database
+  database:
+    image: mariadb:10.3
+    container_name: climatempo
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      - "MYSQL_DATABASE=climatempo"
+      - "MYSQL_USER=admin"
+      - "MYSQL_PASSWORD=123"
+      - "MYSQL_ROOT_PASSWORD=123"
+    ports:
+      - "3131:3306"
+
+volumes:
+  dbdata:
