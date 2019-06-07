@@ -3,7 +3,7 @@
 
 ### Iniciando
 
-- Clone este  repository;
+- Clone este repositório;
 - Inicie o docker:
 ```
 $ docker-compose up -d
