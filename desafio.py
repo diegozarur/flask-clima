@@ -1,5 +1,3 @@
-from models.socio import Socio
-
 # ----------------------------------------------------------------------------#
 # Primeiro Desafio
 # ----------------------------------------------------------------------------#
@@ -34,24 +32,64 @@ lista_socios = [
     (9, 19),
 ]
 
-
-def listaDoBanco():
-    lista = []
-    for p in Socio.select(Socio.id):
-        lista.append(p)
-    return lista
+carteira = [
+    {
+        'numero': 1,
+        'ativo': True,
+        'bilhete': 10,
+    },
+    {
+        'numero': 2,
+        'ativo': False,
+        'bilhete': 0,
+    },
+    {
+        'numero': 3,
+        'ativo': True,
+        'bilhete': 12,
+    },
+    {
+        'numero': 4,
+        'ativo': False,
+        'bilhete': 0,
+    },
+    {
+        'numero': 5,
+        'ativo': True,
+        'bilhete': 14,
+    },
+    {
+        'numero': 6,
+        'ativo': True,
+        'bilhete': 15,
+    },
+]
 
 
 def atualiza_socios(lista_socios):
+    indexes = []
     for a, b in lista_socios:
-        if Socio.select().where(Socio.id == a):
-            Socio.update(bilhete=b).where(Socio.id == a).execute()
-            print("Sòcios atualizados: " + str(a))
+        indexes.append(a)
 
-        if not Socio.select().where(Socio.id == a):
-            Socio.insert(id=a, bilhete=b, ativo=1).execute()
-            print("Sòcios adicionados: " + str(a))
+    indexes_db = []
+    for t in carteira:
+        indexes_db.append(t['numero'])
+
+    for b in carteira:
+        for id, bilhete in lista_socios:
+            if b['numero'] == id:
+                b['bilhete'] = bilhete
+
+            if not b['numero'] in indexes:
+                b['ativo'] = False
+                b['bilhete'] = 0
+
+    for i, b in lista_socios:
+        if not i in indexes_db:
+            carteira.append({'numero': i, 'ativo': True, 'bilhete': b})
+    return carteira
 
 
-atualiza_socios(lista_socios)
+print(atualiza_socios(lista_socios))
+
 # ----------------------------------------------------------------------------#
